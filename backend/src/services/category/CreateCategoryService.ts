@@ -29,4 +29,4 @@ class CreateCategoryService {
     return category;
   }
 }
-export default CreateCategoryService;
+export { CreateCategoryService };
