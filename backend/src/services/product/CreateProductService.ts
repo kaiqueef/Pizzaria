@@ -15,7 +15,24 @@ class CreateProductService {
     banner,
     category_id,
   }: ProductRequest) {
-    return { ok: true };
+    const productAlreadyExists = await prismaClient.product.findFirst({
+      where: {
+        name: name,
+      },
+    });
+    if (productAlreadyExists)
+      throw new Error("This product already exists in our database");
+
+    const product = await prismaClient.product.create({
+      data: {
+        name: name,
+        price: price,
+        description: description,
+        banner: banner,
+        category_id: category_id,
+      },
+    });
+    return product;
   }
 }
 
